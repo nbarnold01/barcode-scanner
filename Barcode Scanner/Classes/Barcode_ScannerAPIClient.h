@@ -3,8 +3,8 @@
 
 static NSString * const kAPIBaseURLString = @"https://example.com/api/v1/";
 
-typedef void (^BLCompletionBlock)(id items);
-typedef void (^BLFailureBlock)(NSError *error);
+typedef void (^CompletionBlock)(id items);
+typedef void (^FailureBlock)(NSError *error);
 
 
 @interface Barcode_ScannerAPIClient : NSObject

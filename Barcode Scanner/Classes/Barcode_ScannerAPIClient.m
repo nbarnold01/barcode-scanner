@@ -69,8 +69,8 @@
 - (void)getPath:(NSString *)path
      parameters:(NSDictionary *)parameters
    authRequired:(BOOL)authRequired
-        success:(BLCompletionBlock)success
-        failure:(BLFailureBlock)failure  {
+        success:(CompletionBlock)success
+        failure:(FailureBlock)failure  {
     
     
     
@@ -89,8 +89,8 @@
 - (void)postPath:(NSString *)path
       parameters:(NSDictionary *)parameters
     authRequired:(BOOL)authRequired
-         success:(BLCompletionBlock)success
-         failure:(BLFailureBlock)failure {
+         success:(CompletionBlock)success
+         failure:(FailureBlock)failure {
     
     AFHTTPRequestOperation *request = [self.requestManager POST:path
                                                      parameters:parameters
@@ -108,8 +108,8 @@
 - (void)putPath:(NSString *)path
      parameters:(NSDictionary *)parameters
    authRequired:(BOOL)authRequired
-        success:(BLCompletionBlock)success
-        failure:(BLFailureBlock)failure  {
+        success:(CompletionBlock)success
+        failure:(FailureBlock)failure  {
     
     AFHTTPRequestOperation *request = [self.requestManager PUT:path
                                                     parameters:parameters
@@ -129,8 +129,8 @@
 
 - (void)deletePath:(NSString *)path
       authRequired:(BOOL)authRequired
-           success:(BLCompletionBlock)success
-           failure:(BLFailureBlock)failure  {
+           success:(CompletionBlock)success
+           failure:(FailureBlock)failure  {
     
     
     
@@ -168,7 +168,7 @@
 }
 
 /// Factory method for completion methods. If the server doesn't return success, then call failure.
-- (void (^)(AFHTTPRequestOperation *operation, id results)) successBlock:(BLCompletionBlock)success failure:(BLFailureBlock)failure {
+- (void (^)(AFHTTPRequestOperation *operation, id results)) successBlock:(CompletionBlock)success failure:(FailureBlock)failure {
     
     
     
@@ -208,7 +208,7 @@
 
 
 ///Factory Method for failure block.
-- (void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock:(BLFailureBlock)failure {
+- (void(^)(AFHTTPRequestOperation *operation, NSError *error))failureBlock:(FailureBlock)failure {
     
     return ^(AFHTTPRequestOperation *operation, NSError *error) {
         
