@@ -20,12 +20,12 @@ didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
-    UIViewController *viewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
-    self.navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
-    
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = self.navigationController;
-    [self.window makeKeyAndVisible];
+//    UIViewController *viewController = [[UITableViewController alloc] initWithStyle:UITableViewStylePlain];
+//    self.navigationController = [[UINavigationController alloc] initWithRootViewController:viewController];
+//    
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    self.window.rootViewController = self.navigationController;
+//    [self.window makeKeyAndVisible];
     
     return YES;
 }

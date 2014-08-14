@@ -1,19 +1,20 @@
-#import "Barcode_ScannerAPIClient.h"
+#import "APIClient.h"
+#import "ServerAddress.h"
 
 
-@interface Barcode_ScannerAPIClient ()
+@interface APIClient ()
 
 @property (nonatomic, strong) AFNetworkReachabilityManager *reachabilityManager;
 @property (nonatomic, strong) AFHTTPRequestOperationManager *requestManager;
 
 @end
 
-@implementation Barcode_ScannerAPIClient
+@implementation APIClient
 
 
 + (instancetype)sharedInstance {
     
-    static Barcode_ScannerAPIClient *_self;
+    static APIClient *_self;
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
@@ -55,6 +56,21 @@
 - (AFNetworkReachabilityStatus)networkReachabilityStatus {
     
     return [self.reachabilityManager networkReachabilityStatus];
+}
+
+- (void)getScanCodeReportWithPublicPartnerID:(NSString*)productPartnerID
+                             productInstance:(NSString *)productInstance
+                                   segmentID:(NSString *)segmentID
+                                  completion:(CompletionBlock)complete
+                                     failure:(FailureBlock)failure {
+    
+    [self getPath:[self fullPathForRequest:@"scan"]
+       parameters:@{@"PublicPartnerID":productPartnerID,
+                    @"ProductInstance":productInstance,
+                    @"SegmentID":segmentID}
+     authRequired:NO
+          success:complete
+          failure:failure];
 }
 
 
@@ -153,8 +169,8 @@
 
 - (void)addDefaultHeaders {
     
-    AFHTTPRequestSerializer *serializer = self.requestManager.requestSerializer;
-//    
+//    AFHTTPRequestSerializer *serializer = self.requestManager.requestSerializer;
+//
 //    [serializer setValue:[[UIDevice currentDevice]model] forHTTPHeaderField:@"device"];
 //    [serializer setValue:[[UIDevice currentDevice]systemVersion] forHTTPHeaderField:@"os_version"];
 //    [serializer setValue:@"iOS" forHTTPHeaderField:@"OS"];
