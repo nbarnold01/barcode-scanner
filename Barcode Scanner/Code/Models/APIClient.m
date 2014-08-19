@@ -18,7 +18,7 @@
     
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        _self = [[super alloc]init];
+        _self = [[self alloc]init];
     });
     
     
@@ -33,11 +33,16 @@
     if (self){
         
         _requestManager = [[AFHTTPRequestOperationManager alloc]initWithBaseURL:[NSURL URLWithString:kAPIBaseURLString]];
+        _requestManager.requestSerializer = [AFJSONRequestSerializer serializer];
+
         
         AFJSONResponseSerializer *serializer = [AFJSONResponseSerializer serializer];
         [serializer setRemovesKeysWithNullValues:YES];
         _requestManager.responseSerializer = serializer;
-        
+        _requestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/html"];
+
+//        _requestManager.responseSerializer.acceptableContentTypes = [NSSet setWithObject:@"text/json"];
+
         [self addDefaultHeaders];
         
         
@@ -58,16 +63,19 @@
     return [self.reachabilityManager networkReachabilityStatus];
 }
 
-- (void)getScanCodeReportWithPublicPartnerID:(NSString*)productPartnerID
+- (void)postScanCodeReportWithPublicPartnerID:(NSString*)productPartnerID
                              productInstance:(NSString *)productInstance
                                    segmentID:(NSString *)segmentID
                                   completion:(CompletionBlock)complete
                                      failure:(FailureBlock)failure {
     
-    [self getPath:[self fullPathForRequest:@"scan"]
-       parameters:@{@"PublicPartnerID":productPartnerID,
-                    @"ProductInstance":productInstance,
-                    @"SegmentID":segmentID}
+    [self postPath:[self fullPathForRequest:@"jsontest"]
+       parameters:@{@"PublicPartnerID":@1,
+                    @"ProductInstance":@1,
+                    @"SegmentID":@1,
+                    @"ClientTimeStamp":@"f",
+                    @"ClientGeolocation":@"f"
+                    }
      authRequired:NO
           success:complete
           failure:failure];
@@ -109,11 +117,15 @@
          failure:(FailureBlock)failure {
     
     AFHTTPRequestOperation *request = [self.requestManager POST:path
-                                                     parameters:parameters
-                                                        success: [self successBlock:success failure:failure]
-                                                        failure:[self failureBlock:failure]];
+                   parameters:parameters
+                      success: [self successBlock:success failure:failure]
+                      failure:[self failureBlock:failure]];
     
-    [request start];
+    
+   NSLog(@"%@",request);
+    
+    
+    
     
 }
 
@@ -193,25 +205,25 @@
         
         NSLog(@"URL: %@ results: %@", [operation.request.URL absoluteString],[results description]);
         
-        NSDictionary *meta = results[@"meta"];
-        
-        NSInteger code = 0;
-        
-        if (meta[@"code"]) {
-            code = [meta[@"code"]integerValue];
-        }
-        
-        
-        if (code/200 != 1 ) {
-            
-            NSError *error =  [NSError errorWithDomain:@"" code:code userInfo:meta];
-            
-            if (failure) failure(error);
-            
-        } else {
-            
+//        NSDictionary *meta = results[@"meta"];
+//        
+//        NSInteger code = 0;
+//        
+//        if (meta[@"code"]) {
+//            code = [meta[@"code"]integerValue];
+//        }
+//        
+//        
+//        if (code/200 != 1 ) {
+//            
+//            NSError *error =  [NSError errorWithDomain:@"" code:code userInfo:meta];
+//            
+//            if (failure) failure(error);
+//            
+//        } else {
+//            
             if (success) success(results);
-        }
+//        }
         
     };
     

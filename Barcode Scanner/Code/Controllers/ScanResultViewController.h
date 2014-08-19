@@ -15,9 +15,11 @@
 @property (weak, nonatomic) IBOutlet UITextView *scanCodeTextView;
 
 @property (weak, nonatomic) IBOutlet UITextView *serverResponseTextView;
+@property (weak, nonatomic) IBOutlet UITextField *partnerIDLabel;
+@property (weak, nonatomic) IBOutlet UITextField *productInstanceLabel;
+@property (weak, nonatomic) IBOutlet UITextField *segmentIDLabel;
 
-- (IBAction)resubmitPressed:(id)sender;
-
+- (IBAction)pressedSubmit:(id)sender;
 
 
 @end

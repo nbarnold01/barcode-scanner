@@ -1161,7 +1161,13 @@ typedef enum {
             [mutableRequest setValue:[NSString stringWithFormat:@"application/json; charset=%@", charset] forHTTPHeaderField:@"Content-Type"];
         }
 
-        [mutableRequest setHTTPBody:[NSJSONSerialization dataWithJSONObject:parameters options:self.writingOptions error:error]];
+        NSData *JSONdata =[NSJSONSerialization dataWithJSONObject:parameters options:self.writingOptions error:error];
+        
+        [mutableRequest setHTTPBody:JSONdata];
+        
+       id obj = [NSJSONSerialization JSONObjectWithData:JSONdata options:NSJSONReadingAllowFragments error:nil];
+        
+        NSLog(@"%@",obj);
     }
 
     return mutableRequest;

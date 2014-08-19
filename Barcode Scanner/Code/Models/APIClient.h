@@ -1,7 +1,6 @@
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 
 
-static NSString * const kAPIBaseURLString = @"https://example.com/api/v1/";
 
 typedef void (^CompletionBlock)(id items);
 typedef void (^FailureBlock)(NSError *error);
@@ -13,7 +12,7 @@ typedef void (^FailureBlock)(NSError *error);
 
 - (AFNetworkReachabilityStatus)networkReachabilityStatus;
 
-- (void)getScanCodeReportWithPublicPartnerID:(NSString*)productPartnerID
+- (void)postScanCodeReportWithPublicPartnerID:(NSString*)productPartnerID
                              productInstance:(NSString *)productInstance
                                    segmentID:(NSString *)segmentID
                                   completion:(CompletionBlock)complete

@@ -8,6 +8,7 @@
 
 #import "ScanResultViewController.h"
 #import "APIClient.h"
+#import "ServerAddress.h"
 
 @interface ScanResultViewController ()
 
@@ -59,10 +60,8 @@
 
 #pragma mark - Actions
 
-- (IBAction)resubmitPressed:(id)sender {
+- (IBAction)pressedSubmit:(id)sender {
     
-    self.code = self.scanCodeTextView.text;
-
     [self sendToServer];
     
 }
@@ -75,7 +74,23 @@
 
 - (void)sendToServer {
     
-//    [APIClient sharedInstance]getScanCodeReportWithPublicPartnerID:<#(NSString *)#> productInstance:<#(NSString *)#> segmentID:<#(NSString *)#> completion:<#^(id items)complete#> failure:<#^(NSError *error)failure#>
+//    
+//   NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:[NSString stringWithFormat:@"%@%@",kAPIBaseURLString,@"jsontest"]]];
+//    
+//    
+//    [request setHTTPMethod:@"POST"];
+//    
+//    return;
+    
+    [[APIClient sharedInstance]postScanCodeReportWithPublicPartnerID:self.productInstanceLabel.text
+                                                    productInstance:self.productInstanceLabel.text
+                                                          segmentID:self.segmentIDLabel.text
+                                                         completion:^(id items) {
+                                                             NSLog(@"items: %@",items);
+                                                             
+                                                         } failure:^(NSError *error) {
+                                                             NSLog(@"%@",error);
+                                                         }];
     
 }
 
